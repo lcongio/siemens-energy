@@ -3,6 +3,3 @@ CREATE DATABASE grafana_storage;
 
 -- Grant necessary privileges to the user siemens on grafana_storage
 GRANT ALL PRIVILEGES ON DATABASE grafana_storage TO siemens;
-
--- Optionally, you can set additional permissions
--- GRANT SELECT ON ALL TABLES IN SCHEMA public TO siemens;

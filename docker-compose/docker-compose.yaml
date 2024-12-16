@@ -13,7 +13,7 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "siemens", "-d", "grafana_storage"]
+      test: ["CMD", "/usr/local/bin/check_databases.sh"]
       interval: 5s
       retries: 5
       start_period: 5s
@@ -29,10 +29,14 @@ services:
       DB_NAME: data_storage
       DB_USER: siemens
       DB_PASSWORD: energy
+      REPLICA: ${HOSTNAME}
     volumes:
       - ./producer/config:/config
     depends_on:
-      - timescaledb
+      timescaledb:
+        condition: service_healthy
+    # deploy:
+    #   replicas: 2
 
   grafana:
     build:

@@ -1,6 +1,8 @@
 # Use the official TimescaleDB image
 FROM timescale/timescaledb:latest-pg15
 
-# Copy the create db script into the container's initialization directory
-# COPY create_producer_db.sql /docker-entrypoint-initdb.d/
-# COPY create_grafana_db.sql /docker-entrypoint-initdb.d/
+# Copy the healthcheck script
+COPY ./check_databases.sh /usr/local/bin/check_databases.sh
+
+# Make sure the script is executable
+RUN chmod +x /usr/local/bin/check_databases.sh

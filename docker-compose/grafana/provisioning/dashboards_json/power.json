@@ -1,0 +1,662 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 6,
+    "links": [],
+    "panels": [
+      {
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "timescale"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 385
+                }
+              ]
+            },
+            "unit": "volt"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 6,
+          "x": 0,
+          "y": 0
+        },
+        "id": 4,
+        "options": {
+          "displayMode": "gradient",
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": false
+          },
+          "maxVizHeight": 300,
+          "minVizHeight": 16,
+          "minVizWidth": 8,
+          "namePlacement": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showUnfilled": true,
+          "sizing": "auto",
+          "valueMode": "color"
+        },
+        "pluginVersion": "11.4.0",
+        "targets": [
+          {
+            "editorMode": "builder",
+            "format": "table",
+            "rawSql": "SELECT value FROM sensor_data WHERE sensor_id = 'voltage_motor' ",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [
+                    {
+                      "name": "value",
+                      "type": "functionParameter"
+                    }
+                  ],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": null,
+              "whereJsonTree": {
+                "children1": [
+                  {
+                    "id": "8a98a8bb-89ab-4cde-b012-3193d0403ee0",
+                    "properties": {
+                      "field": "sensor_id",
+                      "fieldSrc": "field",
+                      "operator": "equal",
+                      "value": [
+                        "voltage_motor"
+                      ],
+                      "valueError": [
+                        null
+                      ],
+                      "valueSrc": [
+                        "value"
+                      ],
+                      "valueType": [
+                        "text"
+                      ]
+                    },
+                    "type": "rule"
+                  }
+                ],
+                "id": "9889aa88-0123-4456-b89a-b193cfe45455",
+                "type": "group"
+              },
+              "whereString": "sensor_id = 'voltage_motor'"
+            },
+            "table": "sensor_data"
+          }
+        ],
+        "title": "Voltage (last sample)",
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "uid": "timescale"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 385
+                }
+              ]
+            },
+            "unit": "volt"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 6,
+          "x": 6,
+          "y": 0
+        },
+        "id": 5,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.4.0",
+        "targets": [
+          {
+            "editorMode": "builder",
+            "format": "table",
+            "rawSql": "SELECT AVG(value) FROM sensor_data WHERE sensor_id = 'voltage_motor' ",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "name": "AVG",
+                  "parameters": [
+                    {
+                      "name": "value",
+                      "type": "functionParameter"
+                    }
+                  ],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": null,
+              "whereJsonTree": {
+                "children1": [
+                  {
+                    "id": "bbb9a899-89ab-4cde-b012-3193d0434de8",
+                    "properties": {
+                      "field": "sensor_id",
+                      "fieldSrc": "field",
+                      "operator": "equal",
+                      "value": [
+                        "voltage_motor"
+                      ],
+                      "valueError": [
+                        null
+                      ],
+                      "valueSrc": [
+                        "value"
+                      ],
+                      "valueType": [
+                        "text"
+                      ]
+                    },
+                    "type": "rule"
+                  }
+                ],
+                "id": "9889aa88-0123-4456-b89a-b193cfe45455",
+                "type": "group"
+              },
+              "whereString": "sensor_id = 'voltage_motor'"
+            },
+            "table": "sensor_data"
+          }
+        ],
+        "title": "Voltage (average)",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "timescale"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 7
+                }
+              ]
+            },
+            "unit": "amp"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 6,
+          "x": 12,
+          "y": 0
+        },
+        "id": 6,
+        "options": {
+          "displayMode": "gradient",
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": false
+          },
+          "maxVizHeight": 300,
+          "minVizHeight": 16,
+          "minVizWidth": 8,
+          "namePlacement": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showUnfilled": true,
+          "sizing": "auto",
+          "valueMode": "color"
+        },
+        "pluginVersion": "11.4.0",
+        "targets": [
+          {
+            "editorMode": "builder",
+            "format": "table",
+            "rawSql": "SELECT value FROM sensor_data WHERE sensor_id = 'current_motor' ",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [
+                    {
+                      "name": "value",
+                      "type": "functionParameter"
+                    }
+                  ],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": null,
+              "whereJsonTree": {
+                "children1": [
+                  {
+                    "id": "8a98a8bb-89ab-4cde-b012-3193d0403ee0",
+                    "properties": {
+                      "field": "sensor_id",
+                      "fieldSrc": "field",
+                      "operator": "equal",
+                      "value": [
+                        "current_motor"
+                      ],
+                      "valueError": [
+                        null
+                      ],
+                      "valueSrc": [
+                        "value"
+                      ],
+                      "valueType": [
+                        "text"
+                      ]
+                    },
+                    "type": "rule"
+                  }
+                ],
+                "id": "9889aa88-0123-4456-b89a-b193cfe45455",
+                "type": "group"
+              },
+              "whereString": "sensor_id = 'current_motor'"
+            },
+            "table": "sensor_data"
+          }
+        ],
+        "title": "Current (last sample)",
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "uid": "timescale"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 7
+                }
+              ]
+            },
+            "unit": "amp"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 6,
+          "x": 18,
+          "y": 0
+        },
+        "id": 7,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.4.0",
+        "targets": [
+          {
+            "editorMode": "builder",
+            "format": "table",
+            "rawSql": "SELECT AVG(value) FROM sensor_data WHERE sensor_id = 'current_motor' ",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "name": "AVG",
+                  "parameters": [
+                    {
+                      "name": "value",
+                      "type": "functionParameter"
+                    }
+                  ],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": null,
+              "whereJsonTree": {
+                "children1": [
+                  {
+                    "id": "bbb9a899-89ab-4cde-b012-3193d0434de8",
+                    "properties": {
+                      "field": "sensor_id",
+                      "fieldSrc": "field",
+                      "operator": "equal",
+                      "value": [
+                        "current_motor"
+                      ],
+                      "valueError": [
+                        null
+                      ],
+                      "valueSrc": [
+                        "value"
+                      ],
+                      "valueType": [
+                        "text"
+                      ]
+                    },
+                    "type": "rule"
+                  }
+                ],
+                "id": "9889aa88-0123-4456-b89a-b193cfe45455",
+                "type": "group"
+              },
+              "whereString": "sensor_id = 'current_motor'"
+            },
+            "table": "sensor_data"
+          }
+        ],
+        "title": "Current (average)",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "timescale"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic-by-name"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 2500
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 24,
+          "x": 0,
+          "y": 9
+        },
+        "id": 3,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "11.4.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-postgresql-datasource",
+              "uid": "timescale"
+            },
+            "editorMode": "code",
+            "format": "table",
+            "rawQuery": true,
+            "rawSql": "WITH voltage AS (\n  SELECT \n    value AS voltage, \n    DATE_TRUNC('second', timestamp) AS voltage_timestamp, \n    LEAD(value) OVER (ORDER BY DATE_TRUNC('second', timestamp)) AS next_voltage\n  FROM sensor_data\n  WHERE sensor_id = 'voltage_motor'\n),\ncurrent AS (\n  SELECT \n    value AS current, \n    DATE_TRUNC('second', timestamp) AS current_timestamp\n  FROM sensor_data\n  WHERE sensor_id = 'current_motor'\n)\nSELECT \n  c.current * v.next_voltage AS power_va,\n  c.current AS current,\n  v.next_voltage AS voltage,\n  c.current_timestamp AS time\nFROM \n  current c\nJOIN \n  voltage v\nON \n  c.current_timestamp = v.voltage_timestamp;\n",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [
+                    {
+                      "name": "value",
+                      "type": "functionParameter"
+                    }
+                  ],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [],
+              "limit": null,
+              "orderBy": {
+                "property": {
+                  "type": "string"
+                },
+                "type": "property"
+              },
+              "whereJsonTree": {
+                "children1": [
+                  {
+                    "id": "99b8888b-89ab-4cde-b012-3193cfebe56f",
+                    "properties": {
+                      "field": "sensor_id",
+                      "fieldSrc": "field",
+                      "operator": "equal",
+                      "value": [
+                        "voltage_motor"
+                      ],
+                      "valueError": [
+                        null
+                      ],
+                      "valueSrc": [
+                        "value"
+                      ],
+                      "valueType": [
+                        "text"
+                      ]
+                    },
+                    "type": "rule"
+                  }
+                ],
+                "id": "9889aa88-0123-4456-b89a-b193cfe45455",
+                "type": "group"
+              },
+              "whereString": "sensor_id = 'voltage_motor'"
+            },
+            "table": "sensor_data"
+          }
+        ],
+        "title": "Apparent Power (time series)",
+        "type": "timeseries"
+      }
+    ],
+    "preload": false,
+    "refresh": "5s",
+    "schemaVersion": 40,
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "2024-12-16T14:26:46.894Z",
+      "to": "2024-12-16T14:43:11.392Z"
+    },
+    "timepicker": {},
+    "timezone": "browser",
+    "title": "Power",
+    "uid": "de73rq33qm39cf",
+    "version": 22,
+    "weekStart": ""
+  }

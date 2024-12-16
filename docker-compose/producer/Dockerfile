@@ -8,10 +8,15 @@ RUN apt update && apt install -y \
 WORKDIR /app
 
 # Copy the application files
-COPY producer.py /app/producer.py
+# COPY producer.py /app/producer.py
+COPY models /app/models
+COPY views /app/views
+COPY controllers /app/controllers
+COPY main.py /app/
 
 # Install necessary dependencies
 RUN pip install pyyaml psycopg2
 
 # Command to run the producer script
-CMD ["python", "/app/producer.py"]
+CMD ["python", "/app/main.py"]
+# CMD ["/bin/bash", "-c", "sleep infinity"]
