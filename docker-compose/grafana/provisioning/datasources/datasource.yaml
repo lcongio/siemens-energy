@@ -1,0 +1,18 @@
+apiVersion: 1
+
+datasources:
+  - name: TimescaleDB
+    type: postgres
+    access: proxy
+    url: 192.168.122.201:5432
+    user: siemens
+    isDefault: true
+    uid: timescale
+    secureJsonData:
+      password: energy
+    jsonData:
+      database: data_storage
+      postgresVersion: 15
+      sslmode: disable
+      timescaledb: true
+      postgresSchema: public 

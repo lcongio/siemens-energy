@@ -1,0 +1,59 @@
+services:
+  timescaledb:
+    build:
+      context: ./timescaledb
+    container_name: timescaledb
+    environment:
+      POSTGRES_USER: siemens
+      POSTGRES_PASSWORD: energy
+    volumes:
+      - timescaledb_data:/var/lib/postgresql/data
+      - ./timescaledb/create_producer_db.sql:/docker-entrypoint-initdb.d/create_producer_db.sql
+      - ./timescaledb/create_grafana_db.sql:/docker-entrypoint-initdb.d/create_grafana_db.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "siemens", "-d", "grafana_storage"]
+      interval: 5s
+      retries: 5
+      start_period: 5s
+      timeout: 5s
+
+  producer:
+    build:
+      context: ./producer
+    container_name: producer
+    environment:
+      DB_HOST: timescaledb
+      DB_PORT: 5432
+      DB_NAME: data_storage
+      DB_USER: siemens
+      DB_PASSWORD: energy
+    volumes:
+      - ./producer/config:/config
+    depends_on:
+      - timescaledb
+
+  grafana:
+    build:
+      context: ./grafana
+    container_name: grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: grafana
+      GF_SECURITY_ADMIN_PASSWORD: monitoring
+      GF_DATABASE_TYPE: postgres
+      GF_DATABASE_HOST: timescaledb:5432
+      GF_DATABASE_NAME: grafana_storage
+      GF_DATABASE_USER: siemens
+      GF_DATABASE_PASSWORD: energy
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning/dashboards_json:/etc/grafana/provisioning/dashboards_json
+    ports:
+      - "3000:3000"
+    depends_on:
+      timescaledb:
+        condition: service_healthy
+
+volumes:
+  timescaledb_data:
