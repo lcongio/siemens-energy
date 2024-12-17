@@ -19,4 +19,3 @@ RUN pip install pyyaml psycopg2
 
 # Command to run the producer script
 CMD ["python", "/app/main.py"]
-# CMD ["/bin/bash", "-c", "sleep infinity"]

@@ -10,23 +10,45 @@ function log {
 }
 
 function install {
-    log "Starting k8s installation..."
+    log "Starting K8s setup..."
 
-    sudo apt update
+    log "Installing kubectl"
 
-    # apt-transport-https may be a dummy package; if so, you can skip that package
-    sudo apt install -y apt-transport-https ca-certificates curl gpg
+    curl -sLO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
-    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    log "Installing minikube"
 
-    # This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
-    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+    curl -sLO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
 
-    sudo apt update
-    sudo apt install -y kubelet kubeadm kubectl
-    sudo apt-mark hold kubelet kubeadm kubectl
+    log "Initializing the cluster"
 
-    log "End k8s installation!"
+    minikube start
+
+    log "End K8s setup!"
+}
+
+function service {
+    sudo bash -c "cat <<EOF > /etc/systemd/system/minikube.service
+[Unit]
+Description=Minikube Kubernetes Cluster
+Wants=network-online.target docker.service
+
+[Service]
+Type=simple
+User=$(whoami)
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/local/bin/minikube start
+
+[Install]
+WantedBy=multi-user.target
+EOF"
+
+    sudo systemctl daemon-reload
+    sudo systemctl enable minikube.service
+    sudo systemctl start minikube.service
 }
 
 install
+service

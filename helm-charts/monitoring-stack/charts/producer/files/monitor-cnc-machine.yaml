@@ -1,0 +1,64 @@
+sensors:
+  - id: "spindle_speed"
+    type: "speed"
+    location: "spindle"
+    unit: "RPM"
+    interval: 5
+    upper_limit: 12000
+    lower_limit: 500
+  - id: "cutting_force"
+    type: "force"
+    location: "tool"
+    unit: "N"
+    interval: 10
+    upper_limit: 5000
+    lower_limit: 100
+  - id: "tool_wear"
+    type: "wear"
+    location: "tool"
+    unit: "mm"
+    interval: 15
+    upper_limit: 5
+    lower_limit: 0.1
+  - id: "coolant_temperature"
+    type: "temperature"
+    location: "coolant"
+    unit: "Celsius"
+    interval: 20
+    upper_limit: 40
+    lower_limit: 10
+  - id: "machine_temperature"
+    type: "temperature"
+    location: "machine"
+    unit: "Celsius"
+    interval: 10
+    upper_limit: 70
+    lower_limit: 10
+  - id: "vibration_machine"
+    type: "vibration"
+    location: "machine"
+    unit: "mm/s"
+    interval: 10
+    upper_limit: 2.0
+    lower_limit: 0.2
+  - id: "feed_rate"
+    type: "rate"
+    location: "machine"
+    unit: "mm/min"
+    interval: 10
+    upper_limit: 2000
+    lower_limit: 50
+  - id: "tool_position"
+    type: "position"
+    location: "tool"
+    unit: "mm"
+    interval: 5
+    upper_limit: 300
+    lower_limit: 0
+  - id: "power_consumption"
+    type: "power"
+    location: "machine"
+    unit: "kW"
+    interval: 20
+    upper_limit: 20
+    lower_limit: 0.5

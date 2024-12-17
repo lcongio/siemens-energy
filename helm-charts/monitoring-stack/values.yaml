@@ -1,0 +1,18 @@
+grafana:
+  replicaCount: 1
+
+producer:
+  replicaCount: 1
+  defaultMonitorFile: "monitor-pump.yaml"
+  monitorOverrides:
+    - replica: 1
+      file: "monitor-boiler.yaml"
+    - replica: 2
+      file: "monitor-cnc-machine.yaml"
+    - replica: 3
+      file: "monitor-energy-distribution.yaml"
+
+timescaledb:
+  timescaledb:
+    storage:
+      size: 20Gi

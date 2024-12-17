@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: producer
+spec:
+  serviceName: "producer"
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: producer
+  template:
+    metadata:
+      labels:
+        app: producer
+    spec:
+      containers:
+        - name: producer
+          image: {{ .Values.producer.image.repository }}:{{ .Values.producer.image.tag }}
+          env:
+            - name: DB_HOST
+              value: {{ .Values.producer.env.DB_HOST }}
+            - name: DB_PORT
+              value: "{{ .Values.producer.env.DB_PORT }}"
+            - name: DB_NAME
+              value: {{ .Values.producer.env.DB_NAME }}
+            - name: DB_USER
+              value: {{ .Values.producer.env.DB_USER }}
+            - name: DB_PASSWORD
+              value: {{ .Values.producer.env.DB_PASSWORD }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: MONITOR_FILE
+              value: |
+                {{- $default := .Values.producer.defaultMonitorFile }}
+                {{- range .Values.producer.monitorOverrides }}
+                {{- if eq (printf "producer-%d" .replica) "$(POD_NAME)" }}
+                {{ .file }}
+                {{- end }}
+                {{- end }}
+                {{ $default }}
+          volumeMounts:
+            - name: monitors-config
+              mountPath: /config
+      volumes:
+        - name: monitors-config
+          configMap:
+            name: {{ .Release.Name }}-monitors-config

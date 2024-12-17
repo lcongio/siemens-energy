@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-dashboards-json
+data:
+  {{- range $file, $content := .Files.Glob "dashboards_json/*" }}
+  {{ $file | base }}: |
+  {{ $.Files.Get $file | indent 4 }}
+  {{- end }}

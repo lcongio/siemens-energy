@@ -1,0 +1,12 @@
+replicaCount: 2
+
+producer:
+  image:
+    repository: your-producer-image
+    tag: latest
+  env:
+    DB_HOST: "timescaledb"
+    DB_PORT: 5432
+    DB_NAME: "data_storage"
+    DB_USER: "siemens"
+    DB_PASSWORD: "energy"

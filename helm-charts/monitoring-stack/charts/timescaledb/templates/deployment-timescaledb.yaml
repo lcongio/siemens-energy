@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timescaledb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: timescaledb
+  template:
+    metadata:
+      labels:
+        app: timescaledb
+    spec:
+      containers:
+        - name: timescaledb
+          image: {{ .Values.timescaledb.image }}
+          env:
+            - name: POSTGRES_USER
+              value: {{ .Values.timescaledb.user }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.timescaledb.password }}
+          volumeMounts:
+            - name: init-scripts
+              mountPath: /docker-entrypoint-initdb.d
+            - name: pg-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: init-scripts
+          configMap:
+            name: timescaledb-init-scripts
+        - name: pg-data
+          persistentVolumeClaim:
+            claimName: timescaledb-pvc

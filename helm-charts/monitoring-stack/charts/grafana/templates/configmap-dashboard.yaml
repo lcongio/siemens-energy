@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-dashboard
+  labels:
+    app: {{ .Chart.Name }}
+data:
+  dashboard.yaml: |
+    {{- .Values.provisioning.dashboards.dashboardYaml | nindent 4 }}
+

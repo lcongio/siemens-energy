@@ -1,0 +1,52 @@
+replicaCount: 1
+
+image:
+  repository: grafana/grafana
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 3000
+
+env:
+  GF_SECURITY_ADMIN_USER: grafana
+  GF_SECURITY_ADMIN_PASSWORD: monitoring
+  GF_DATABASE_TYPE: postgres
+  GF_DATABASE_HOST: 192.168.122.201:5432
+  GF_DATABASE_NAME: grafana_storage
+  GF_DATABASE_USER: siemens
+  GF_DATABASE_PASSWORD: energy
+
+provisioning:
+  datasources:
+    datasourceYaml: |
+      apiVersion: 1
+      datasources:
+        - name: TimescaleDB
+          type: postgres
+          access: proxy
+          url: 192.168.122.201:5432
+          user: siemens
+          isDefault: true
+          uid: timescale
+          secureJsonData:
+            password: energy
+          jsonData:
+            database: data_storage
+            postgresVersion: 15
+            sslmode: disable
+            timescaledb: true
+            postgresSchema: public
+  dashboards:
+    dashboardYaml: |
+      apiVersion: 1
+      providers:
+        - name: "default"
+          orgId: 1
+          folder: ""
+          type: file
+          disableDeletion: false
+          updateIntervalSeconds: 10
+          options:
+            path: /etc/grafana/provisioning/dashboards

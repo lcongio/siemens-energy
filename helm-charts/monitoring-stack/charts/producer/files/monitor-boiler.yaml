@@ -1,0 +1,22 @@
+sensors:
+  - id: "pressure_boiler"
+    type: "pressure"
+    location: "boiler"
+    unit: "bar"
+    interval: 15
+    upper_limit: 12
+    lower_limit: 2
+  - id: "level_boiler"
+    type: "level"
+    location: "boiler"
+    unit: "percent"
+    interval: 20
+    upper_limit: 100
+    lower_limit: 10
+  - id: "temperature_boiler_water"
+    type: "temperature"
+    location: "boiler_water"
+    unit: "Celsius"
+    interval: 15
+    upper_limit: 100
+    lower_limit: 0

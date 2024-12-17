@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-datasource
+  labels:
+    app: {{ .Chart.Name }}
+data:
+  datasource.yaml: |
+    {{- .Values.provisioning.datasources.datasourceYaml | nindent 4 }}

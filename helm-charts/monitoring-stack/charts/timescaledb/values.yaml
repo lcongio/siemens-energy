@@ -1,0 +1,38 @@
+# Values for the TimescaleDB deployment
+timescaledb:
+  # Docker image for TimescaleDB
+  image: "timescale/timescaledb:latest-pg15"
+
+  # Postgres user and password
+  user: "siemens"
+  password: "energy"
+
+  # List of databases to create on TimescaleDB initialization
+  databases:
+    - grafana_storage
+    - monitor_storage
+
+  # Persistent Volume configuration
+  storage:
+    size: 20Gi  # Storage size for TimescaleDB data
+    class: "standard"  # Storage class (could be "gp2" for AWS, for example)
+
+  # Resources requested for the TimescaleDB pod
+  resources:
+    requests:
+      memory: "1Gi"
+      cpu: "500m"
+    limits:
+      memory: "2Gi"
+      cpu: "1"
+
+  # Path to the health check script (used in deployment)
+  healthCheckScript: "/usr/local/bin/check_databases.sh"
+
+  # Health Check parameters
+  healthCheck:
+    enabled: true
+    interval: 5s
+    retries: 5
+    startPeriod: 5s
+    timeout: 5s

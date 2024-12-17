@@ -1,0 +1,36 @@
+sensors:
+  - id: "voltage"
+    type: "voltage"
+    location: "distribution_board"
+    unit: "V"
+    interval: 10
+    upper_limit: 480
+    lower_limit: 200
+  - id: "current"
+    type: "current"
+    location: "distribution_board"
+    unit: "A"
+    interval: 10
+    upper_limit: 200
+    lower_limit: 0
+  - id: "power_factor"
+    type: "power_factor"
+    location: "distribution_board"
+    unit: "PF"
+    interval: 15
+    upper_limit: 1.0
+    lower_limit: -1.0
+  - id: "temperature_inside"
+    type: "temperature"
+    location: "distribution_board"
+    unit: "Celsius"
+    interval: 20
+    upper_limit: 80
+    lower_limit: 0
+  - id: "temperature_outside"
+    type: "temperature"
+    location: "outside"
+    unit: "Celsius"
+    interval: 20
+    upper_limit: 40
+    lower_limit: -10

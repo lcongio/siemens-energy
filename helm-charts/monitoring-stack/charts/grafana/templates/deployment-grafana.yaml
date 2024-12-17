@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: grafana
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 3000
+          env:
+            - name: GF_SECURITY_ADMIN_USER
+              value: {{ .Values.env.GF_SECURITY_ADMIN_USER }}
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              value: {{ .Values.env.GF_SECURITY_ADMIN_PASSWORD }}
+            - name: GF_DATABASE_TYPE
+              value: {{ .Values.env.GF_DATABASE_TYPE }}
+            - name: GF_DATABASE_HOST
+              value: {{ .Values.env.GF_DATABASE_HOST }}
+            - name: GF_DATABASE_NAME
+              value: {{ .Values.env.GF_DATABASE_NAME }}
+            - name: GF_DATABASE_USER
+              value: {{ .Values.env.GF_DATABASE_USER }}
+            - name: GF_DATABASE_PASSWORD
+              value: {{ .Values.env.GF_DATABASE_PASSWORD }}
+          volumeMounts:
+            - name: datasource-config
+              mountPath: /etc/grafana/provisioning/datasources
+            - name: dashboard-config
+              mountPath: /etc/grafana/provisioning/dashboards
+            - name: dashboards-json
+              mountPath: /etc/grafana/provisioning/dashboards_json
+      volumes:
+        - name: datasource-config
+          configMap:
+            name: {{ .Release.Name }}-datasource
+        - name: dashboard-config
+          configMap:
+            name: {{ .Release.Name }}-dashboard
+        - name: dashboards-json
+          configMap:
+            name: {{ .Release.Name }}-dashboards-json
