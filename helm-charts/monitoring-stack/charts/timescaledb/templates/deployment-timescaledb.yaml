@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: timescaledb
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: timescaledb
@@ -12,19 +12,6 @@ spec:
       labels:
         app: timescaledb
     spec:
-      # initContainers:
-      #   - name: clear-data
-      #     image: busybox
-      #     command:
-      #       - sh
-      #       - -c
-      #       - |
-      #         echo "Clearing directory..."
-      #         rm -rf /var/lib/postgresql/data/* || echo "Directory already empty"
-      #         ls -la /var/lib/postgresql/data
-      #     volumeMounts:
-      #       - name: pg-data
-      #         mountPath: /var/lib/postgresql/data
       containers:
         - name: timescaledb
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}

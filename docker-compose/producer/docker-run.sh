@@ -16,5 +16,5 @@ docker run -d --name $CONTAINER \
         -e DB_NAME=data_storage \
         -e DB_USER="siemens" \
         -e DB_PASSWORD="energy" \
-        -v $SCRIPT_DIR/config:/config \
+        -v $SCRIPT_DIR/files:/config \
         $CONTAINER:latest

@@ -2,18 +2,9 @@ grafana:
   replicaCount: 1
 
 producer:
-  replicaCount: 1
-  
-  defaultSensorsFile: "sensors-pump.yaml"
-  sensorsOverrides:
-    - replica: 1
-      file: "sensors-boiler.yaml"
-    - replica: 2
-      file: "sensors-cnc-machine.yaml"
-    - replica: 3
-      file: "sensors-energy-distribution.yaml"
+  replicaCount: 2
 
 timescaledb:
-  timescaledb:
-    storage:
-      size: 20Gi
+  replicaCount: 1
+  storage:
+    size: 10Gi
