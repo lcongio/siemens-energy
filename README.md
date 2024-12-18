@@ -14,7 +14,7 @@ Install dependencies:
 
 	$ ./siemens-energy/docker-compose/install/docker.sh
 
-Run each microservice separately, go inside each directory (producer, timescaledb and grafana) and run the the `docker-run.sh`, for example, to producer:
+Run each microservice separately, go inside each directory (producer, timescaledb and grafana) and run the `docker-run.sh`, for example, to producer:
 
     $ ./siemens-energy/docker-compose/producer/docker-run.sh
 
@@ -99,7 +99,7 @@ To access the Grafana, get the External IP and Port to access via browser:
 * **username**: grafana
 * **password**: monitoring
 
-# Infrasctructure
+# Infrastructure
 
 ```.
 ├── LICENSE
