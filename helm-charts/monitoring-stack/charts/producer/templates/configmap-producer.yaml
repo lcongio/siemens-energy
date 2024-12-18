@@ -5,5 +5,5 @@ metadata:
 data:
   {{- range $file, $content := .Files.Glob "files/sensors-*.yaml" }}
   {{ $file | base }}: |
-  {{ $.Files.Get $file | indent 4 }}
+{{ $.Files.Get $file | indent 4 }}
   {{- end }}

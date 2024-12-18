@@ -17,7 +17,6 @@ spec:
         - name: producer
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          # command: [ "/bin/bash", "-c", "sleep infinity" ]
           env:
             - name: DB_HOST
               value: {{ .Values.env.DB_HOST }}
@@ -33,15 +32,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: SENSORS_FILE
-              value: |
-                {{- $default := .Values.defaultSensorsFile }}
-                {{- range .Values.sensorsOverrides }}
-                {{- if eq (printf "producer-%d" .replica) "$(POD_NAME)" }}
-                {{ .file }}
-                {{- end }}
-                {{- end }}
-                {{ $default }}
           volumeMounts:
             - name: sensors-config
               mountPath: /config

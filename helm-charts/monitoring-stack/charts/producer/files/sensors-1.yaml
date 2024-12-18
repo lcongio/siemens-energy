@@ -1,3 +1,4 @@
+target: boiler
 sensors:
   - id: "pressure_boiler"
     type: "pressure"

@@ -1,3 +1,4 @@
+target: pump
 sensors:
   - id: "voltage_motor"
     type: "voltage"
@@ -54,4 +55,11 @@ sensors:
     unit: "Celsius"
     interval: 15
     upper_limit: 100
+    lower_limit: 0
+  - id: "temperature_oil"
+    type: "temperature"
+    location: "oil"
+    unit: "Celsius"
+    interval: 15
+    upper_limit: 200
     lower_limit: 0

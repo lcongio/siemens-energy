@@ -1,3 +1,4 @@
+target: cnc-machine
 sensors:
   - id: "spindle_speed"
     type: "speed"

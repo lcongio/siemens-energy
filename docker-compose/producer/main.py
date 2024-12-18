@@ -1,3 +1,4 @@
+import os
 import yaml
 import glob
 import threading
@@ -7,14 +8,28 @@ from views.logger import log_info, log_error
 
 # Load the sensor configuration from the YAML file
 try:
-    file = next(iter(glob.glob('/config/sensors-*.yaml')), None)
+    # Check if POD_NAME exists
+    pod_name = os.getenv('POD_NAME')
+    file = None
+
+    if pod_name and pod_name.startswith("producer-") and pod_name.split("-")[-1].isdigit():
+        # Use the replica number from POD_NAME to determine the file name
+        replica_number = pod_name.split("-")[-1]
+        file = f'/config/sensors-{replica_number}.yaml'
+
+    # Fall back to the default logic if POD_NAME is not set or the file does not exist
     if not file:
-        log_error("No sensor configuration file matching 'sensors-*.yaml' found. Exiting.")
+        file = next(iter(glob.glob('/config/sensors-*.yaml')), None)
+
+    if not file:
+        log_error("No sensor configuration file found. Exiting.")
         exit()
 
+    # Load the sensor configuration file
     with open(file, 'r') as f:
         sensor_config = yaml.safe_load(f)
         log_info(f"Loaded sensor configuration file: {file}")
+
 except Exception as e:
     log_error(f"Error loading sensor configuration: {e}")
     exit()
