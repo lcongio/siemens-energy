@@ -5,14 +5,15 @@ NC="\e[0m"
 
 function log {
 	local msg=$1
-
 	echo -e "${YELLOW}$msg${NC}"
 }
 
-function install {
+function k8s_install {
     log "Starting K8s setup..."
 
     log "Installing kubectl"
+
+    cd /tmp || exit
 
     curl -sLO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
@@ -24,12 +25,12 @@ function install {
 
     log "Initializing the cluster"
 
-    minikube start
+    sudo minikube start --driver=none
 
     log "End K8s setup!"
 }
 
-function service {
+function k8s_service {
     sudo bash -c "cat <<EOF > /etc/systemd/system/minikube.service
 [Unit]
 Description=Minikube Kubernetes Cluster
@@ -39,7 +40,7 @@ Wants=network-online.target docker.service
 Type=simple
 User=$(whoami)
 Environment=PATH=/usr/local/bin:/usr/bin:/bin
-ExecStart=/usr/local/bin/minikube start
+ExecStart=sudo /usr/local/bin/minikube start --driver=none
 
 [Install]
 WantedBy=multi-user.target
@@ -50,5 +51,5 @@ EOF"
     sudo systemctl start minikube.service
 }
 
-install
-service
+k8s_install
+k8s_service

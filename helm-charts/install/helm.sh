@@ -5,7 +5,6 @@ NC="\e[0m"
 
 function log {
 	local msg=$1
-
 	echo -e "${YELLOW}$msg${NC}"
 }
 

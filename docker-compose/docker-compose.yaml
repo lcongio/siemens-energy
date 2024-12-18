@@ -22,7 +22,7 @@ services:
   producer:
     build:
       context: ./producer
-    container_name: producer
+    # container_name: producer
     environment:
       DB_HOST: timescaledb
       DB_PORT: 5432
@@ -34,8 +34,8 @@ services:
     depends_on:
       timescaledb:
         condition: service_healthy
-    # deploy:
-    #   replicas: 2
+    deploy:
+      replicas: 1
 
   grafana:
     build:
@@ -50,8 +50,7 @@ services:
       GF_DATABASE_USER: siemens
       GF_DATABASE_PASSWORD: energy
     volumes:
-      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
-      - ./grafana/provisioning/dashboards_json:/etc/grafana/provisioning/dashboards_json
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
     ports:
       - "3000:3000"
     depends_on:

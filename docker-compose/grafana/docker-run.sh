@@ -18,7 +18,6 @@ docker run -d --name $CONTAINER \
         -e GF_DATABASE_NAME=grafana_storage \
         -e GF_DATABASE_USER=siemens \
         -e GF_DATABASE_PASSWORD=energy \
-        -v $SCRIPT_DIR/provisioning/datasources:/etc/grafana/provisioning/datasources \
-        -v $SCRIPT_DIR/provisioning/dashboards_json:/etc/grafana/provisioning/dashboards_json \
+        -v $SCRIPT_DIR/provisioning/:/etc/grafana/provisioning/ \
         -p 3000:3000 \
         $CONTAINER:latest

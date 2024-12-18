@@ -1,12 +1,21 @@
 replicaCount: 2
 
-producer:
-  image:
-    repository: your-producer-image
-    tag: latest
-  env:
-    DB_HOST: "timescaledb"
-    DB_PORT: 5432
-    DB_NAME: "data_storage"
-    DB_USER: "siemens"
-    DB_PASSWORD: "energy"
+image:
+  repository: docker.io/library/siemens-energy-producer
+  tag: "1.0.0"
+  pullPolicy: Never
+env:
+  DB_HOST: "timescaledb"
+  DB_PORT: 5432
+  DB_NAME: "data_storage"
+  DB_USER: "siemens"
+  DB_PASSWORD: "energy"
+
+defaultSensorsFile: "sensors-pump.yaml"
+sensorsOverrides:
+  - replica: 1
+    file: "sensors-boiler.yaml"
+  - replica: 2
+    file: "sensors-cnc-machine.yaml"
+  - replica: 3
+    file: "sensors-energy-distribution.yaml"

@@ -15,35 +15,37 @@ spec:
     spec:
       containers:
         - name: producer
-          image: {{ .Values.producer.image.repository }}:{{ .Values.producer.image.tag }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # command: [ "/bin/bash", "-c", "sleep infinity" ]
           env:
             - name: DB_HOST
-              value: {{ .Values.producer.env.DB_HOST }}
+              value: {{ .Values.env.DB_HOST }}
             - name: DB_PORT
-              value: "{{ .Values.producer.env.DB_PORT }}"
+              value: "{{ .Values.env.DB_PORT }}"
             - name: DB_NAME
-              value: {{ .Values.producer.env.DB_NAME }}
+              value: {{ .Values.env.DB_NAME }}
             - name: DB_USER
-              value: {{ .Values.producer.env.DB_USER }}
+              value: {{ .Values.env.DB_USER }}
             - name: DB_PASSWORD
-              value: {{ .Values.producer.env.DB_PASSWORD }}
+              value: {{ .Values.env.DB_PASSWORD }}
             - name: POD_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: MONITOR_FILE
+            - name: SENSORS_FILE
               value: |
-                {{- $default := .Values.producer.defaultMonitorFile }}
-                {{- range .Values.producer.monitorOverrides }}
+                {{- $default := .Values.defaultSensorsFile }}
+                {{- range .Values.sensorsOverrides }}
                 {{- if eq (printf "producer-%d" .replica) "$(POD_NAME)" }}
                 {{ .file }}
                 {{- end }}
                 {{- end }}
                 {{ $default }}
           volumeMounts:
-            - name: monitors-config
+            - name: sensors-config
               mountPath: /config
       volumes:
-        - name: monitors-config
+        - name: sensors-config
           configMap:
-            name: {{ .Release.Name }}-monitors-config
+            name: {{ .Release.Name }}-sensors-config

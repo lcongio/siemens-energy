@@ -7,5 +7,3 @@ data:
     {{- .Files.Get "files/create_producer_db.sql" | nindent 4 }}
   create_grafana_db.sql: |
     {{- .Files.Get "files/create_grafana_db.sql" | nindent 4 }}
-  check_databases.sh: |
-    {{- .Files.Get "files/check_databases.sh" | nindent 4 }}

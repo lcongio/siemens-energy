@@ -11,3 +11,5 @@ spec:
       targetPort: 3000
   selector:
     app: {{ .Chart.Name }}
+  externalIPs:
+    - 192.168.122.201

@@ -12,23 +12,36 @@ spec:
       labels:
         app: timescaledb
     spec:
+      # initContainers:
+      #   - name: clear-data
+      #     image: busybox
+      #     command:
+      #       - sh
+      #       - -c
+      #       - |
+      #         echo "Clearing directory..."
+      #         rm -rf /var/lib/postgresql/data/* || echo "Directory already empty"
+      #         ls -la /var/lib/postgresql/data
+      #     volumeMounts:
+      #       - name: pg-data
+      #         mountPath: /var/lib/postgresql/data
       containers:
         - name: timescaledb
-          image: {{ .Values.timescaledb.image }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: POSTGRES_USER
-              value: {{ .Values.timescaledb.user }}
+              value: {{ .Values.user }}
             - name: POSTGRES_PASSWORD
-              value: {{ .Values.timescaledb.password }}
+              value: {{ .Values.password }}
           volumeMounts:
             - name: init-scripts
               mountPath: /docker-entrypoint-initdb.d
             - name: pg-data
-              mountPath: /var/lib/postgresql/data
+              mountPath: /var/lib/postgresql/pgdata
       volumes:
         - name: init-scripts
           configMap:
             name: timescaledb-init-scripts
         - name: pg-data
-          persistentVolumeClaim:
-            claimName: timescaledb-pvc
+          emptyDir: {}

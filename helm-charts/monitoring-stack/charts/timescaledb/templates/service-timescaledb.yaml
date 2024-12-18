@@ -2,9 +2,14 @@ apiVersion: v1
 kind: Service
 metadata:
   name: timescaledb
+  namespace: siemens-energy
+  labels:
+    app: timescaledb
 spec:
   ports:
     - port: 5432
       targetPort: 5432
   selector:
     app: timescaledb
+  externalIPs:
+    - 192.168.122.201

@@ -1,9 +1,9 @@
 replicaCount: 1
 
 image:
-  repository: grafana/grafana
-  tag: latest
-  pullPolicy: IfNotPresent
+  repository: docker.io/library/siemens-energy-grafana
+  tag: "1.0.0"
+  pullPolicy: Never
 
 service:
   type: ClusterIP
@@ -49,4 +49,4 @@ provisioning:
           disableDeletion: false
           updateIntervalSeconds: 10
           options:
-            path: /etc/grafana/provisioning/dashboards
+            path: /etc/grafana/provisioning/dashboards_json

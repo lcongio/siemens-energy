@@ -16,7 +16,6 @@ docker run -d --name $CONTAINER \
     -e POSTGRES_USER=siemens \
     -e POSTGRES_PASSWORD=energy \
     -v pg_data:/var/lib/postgresql/data \
-    -v $SCRIPT_DIR/create_producer_db.sql:/docker-entrypoint-initdb.d/create_producer_db.sql \
-    -v $SCRIPT_DIR/create_grafana_db.sql:/docker-entrypoint-initdb.d/create_grafana_db.sql \
+    -v $SCRIPT_DIR/:/docker-entrypoint-initdb.d/ \
     -p 5432:5432 \
     $CONTAINER:latest

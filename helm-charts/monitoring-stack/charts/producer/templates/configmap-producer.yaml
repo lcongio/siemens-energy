@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-monitors-config
+  name: {{ .Release.Name }}-sensors-config
 data:
-  {{- range $file, $content := .Files.Glob "files/monitor-*.yaml" }}
+  {{- range $file, $content := .Files.Glob "files/sensors-*.yaml" }}
   {{ $file | base }}: |
   {{ $.Files.Get $file | indent 4 }}
   {{- end }}

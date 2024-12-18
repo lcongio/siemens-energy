@@ -1,12 +1,23 @@
 import yaml
+import glob
 import threading
 from controllers.producer import insert_sensors, run_sensor
 from models.sensor import create_connection, create_tables
-from views.logger import log_error
+from views.logger import log_info, log_error
 
 # Load the sensor configuration from the YAML file
-with open('/config/sensors.yaml', 'r') as file:
-    sensor_config = yaml.safe_load(file)
+try:
+    file = next(iter(glob.glob('/config/sensors-*.yaml')), None)
+    if not file:
+        log_error("No sensor configuration file matching 'sensors-*.yaml' found. Exiting.")
+        exit()
+
+    with open(file, 'r') as f:
+        sensor_config = yaml.safe_load(f)
+        log_info(f"Loaded sensor configuration file: {file}")
+except Exception as e:
+    log_error(f"Error loading sensor configuration: {e}")
+    exit()
 
 # List of configured sensors
 sensors = sensor_config['sensors']

@@ -3,14 +3,15 @@ grafana:
 
 producer:
   replicaCount: 1
-  defaultMonitorFile: "monitor-pump.yaml"
-  monitorOverrides:
+  
+  defaultSensorsFile: "sensors-pump.yaml"
+  sensorsOverrides:
     - replica: 1
-      file: "monitor-boiler.yaml"
+      file: "sensors-boiler.yaml"
     - replica: 2
-      file: "monitor-cnc-machine.yaml"
+      file: "sensors-cnc-machine.yaml"
     - replica: 3
-      file: "monitor-energy-distribution.yaml"
+      file: "sensors-energy-distribution.yaml"
 
 timescaledb:
   timescaledb:
